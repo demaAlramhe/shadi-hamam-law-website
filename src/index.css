@@ -1,0 +1,238 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Heebo', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', 'IBM Plex Sans Arabic', serif;
+  --color-gold-300: #e8d5a3;
+  --color-gold-400: #d4b87a;
+  --color-gold-500: #c9a962;
+  --color-gold-600: #a88b4a;
+  --color-charcoal-950: #0a0a0b;
+  --color-charcoal-900: #121214;
+  --color-charcoal-850: #18181b;
+}
+
+@layer base {
+  :root {
+    --a11y-font-scale: 1;
+    --a11y-letter-spacing: 0em;
+    --a11y-line-height: 1.6;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: calc(100% * var(--a11y-font-scale));
+  }
+
+  /**
+   * Arabic: full Arabic font stack so ي / المحامي render with correct dots (Cormorant has no Arabic).
+   */
+  html[lang='ar'] {
+    --font-sans: 'Noto Naskh Arabic', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  }
+
+  html[lang='ar'] .font-display {
+    font-family: var(--font-sans);
+  }
+
+  /* Gradient text must use Arabic stack (Cormorant has no Arabic glyphs). */
+  html[lang='ar'] .text-gradient-gold {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    @apply overflow-x-hidden bg-charcoal-950 text-zinc-100 antialiased font-sans;
+    letter-spacing: var(--a11y-letter-spacing);
+    line-height: var(--a11y-line-height);
+  }
+
+  ::selection {
+    @apply bg-gold-500/30 text-white;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    @apply bg-gradient-to-br from-gold-300 via-gold-500 to-gold-600 bg-clip-text text-transparent;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .container-page {
+    @apply mx-auto max-w-6xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .section-y {
+    @apply py-24 md:py-32 lg:py-36;
+  }
+
+  .reveal-hidden {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .glass-panel {
+    @apply border border-white/[0.08] bg-white/[0.025] shadow-[0_0_0_1px_rgba(255,255,255,0.03)_inset] backdrop-blur-md transition-[border-color,box-shadow,background-color] duration-500;
+  }
+
+  .glass-panel-elevated {
+    @apply border border-white/[0.08] bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.03)_inset] shadow-[0_24px_80px_-24px_rgba(0,0,0,0.55)] backdrop-blur-md;
+  }
+
+  .card-interactive {
+    @apply transition duration-500 ease-out will-change-transform hover:-translate-y-1 hover:border-gold-500/25 hover:shadow-[0_20px_50px_-20px_rgba(201,169,98,0.12)];
+  }
+
+  .btn-primary {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-gradient-to-br from-gold-300 via-gold-500 to-gold-600 px-6 py-3.5 text-sm font-semibold text-charcoal-950 shadow-[0_4px_24px_-4px_rgba(201,169,98,0.45)] ring-1 ring-white/25 transition duration-300 hover:shadow-[0_8px_32px_-6px_rgba(201,169,98,0.55)] hover:brightness-105 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400/60;
+  }
+
+  .btn-secondary {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-gold-500/45 bg-gold-500/[0.08] px-6 py-3.5 text-sm font-semibold text-gold-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] transition duration-300 hover:border-gold-400/60 hover:bg-gold-500/15 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500/50;
+  }
+
+  .btn-outline {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/18 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-white transition duration-300 hover:border-white/28 hover:bg-white/[0.08] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/30;
+  }
+
+  .btn-ghost {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/10 bg-zinc-900/60 px-6 py-3.5 text-sm font-semibold text-zinc-100 transition duration-300 hover:border-white/15 hover:bg-zinc-800/90 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-500/40;
+  }
+
+  .hero-ambient {
+    animation: hero-ambient 14s ease-in-out infinite;
+  }
+
+  .hero-image-ring {
+    animation: hero-ring-pulse 8s ease-in-out infinite;
+  }
+
+  .logo-mark-img {
+    mix-blend-mode: multiply;
+    filter: sepia(0.5) hue-rotate(2deg) saturate(1.75) brightness(1.14) contrast(1.06);
+  }
+}
+
+@keyframes hero-ambient {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes hero-ring-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-hidden,
+  .reveal-visible {
+    transition-duration: 0.01ms !important;
+  }
+
+  .hero-ambient,
+  .hero-image-ring {
+    animation: none !important;
+  }
+}
+
+/* —— Accessibility user preferences (applied via data-* on html) —— */
+html[data-a11y-readable='true'] body {
+  font-family:
+    'Lexend',
+    var(--font-sans),
+    system-ui,
+    sans-serif !important;
+}
+
+html[data-a11y-high-contrast='true'] body {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+html[data-a11y-high-contrast='true'] #root {
+  --tw-text-opacity: 1 !important;
+}
+
+html[data-a11y-high-contrast='true'] #root a[href] {
+  color: #ffdf7e !important;
+  text-decoration: underline !important;
+}
+
+html[data-a11y-high-contrast='true'] #root .text-zinc-400,
+html[data-a11y-high-contrast='true'] #root .text-zinc-300,
+html[data-a11y-high-contrast='true'] #root .text-zinc-500 {
+  color: #e4e4e7 !important;
+}
+
+html[data-a11y-underline-links='true'] #root a[href] {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+html[data-a11y-highlight-links='true'] #root a[href] {
+  outline: 2px solid #c9a962 !important;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+html[data-a11y-highlight-headings='true'] #root :where(h1, h2, h3, h4, h5, h6) {
+  outline: 2px solid rgba(255, 255, 255, 0.85) !important;
+  outline-offset: 4px;
+}
+
+html[data-a11y-focus-highlight='true'] #root *:focus-visible {
+  outline: 3px solid #f5e6b8 !important;
+  outline-offset: 3px !important;
+}
+
+html[data-a11y-pause-motion='true'] #root *,
+html[data-a11y-pause-motion='true'] #root *::before,
+html[data-a11y-pause-motion='true'] #root *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-a11y-big-cursor='true'] #root * {
+  cursor:
+    url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"%3E%3Ccircle cx="16" cy="16" r="10" fill="%23c9a962" stroke="%230a0a0b" stroke-width="2"/%3E%3C/svg%3E')
+      16 16,
+    auto !important;
+}
+
+html[data-a11y-big-cursor='true'] #root a[href],
+html[data-a11y-big-cursor='true'] #root button,
+html[data-a11y-big-cursor='true'] #root input,
+html[data-a11y-big-cursor='true'] #root textarea {
+  cursor:
+    url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"%3E%3Ccircle cx="16" cy="16" r="10" fill="%23c9a962" stroke="%230a0a0b" stroke-width="2"/%3E%3C/svg%3E')
+      16 16,
+    pointer !important;
+}
+
+.skip-to-content {
+  @apply fixed start-4 top-4 z-[200] -translate-y-[200%] rounded-lg bg-gold-400 px-4 py-2.5 text-sm font-semibold text-charcoal-950 shadow-lg transition-transform duration-200 focus:translate-y-0 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-white;
+}
