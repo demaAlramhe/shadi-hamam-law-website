@@ -19,7 +19,7 @@ export function JsonLd() {
       address: {
         '@type': 'PostalAddress',
         streetAddress: siteConfig.addressHe,
-        addressLocality: 'קרית מוצקין',
+        addressLocality: 'טמרה',
         addressCountry: 'IL',
       },
       sameAs: [siteConfig.instagram, siteConfig.facebook],

@@ -13,9 +13,12 @@ export const siteConfig = {
   email: 'office@sh-adv.net',
   instagram: 'https://www.instagram.com/shadiadvocate/',
   facebook: 'https://www.facebook.com/SH.Hamam.Law/?locale=he_IL',
-  addressHe: 'שדרות משה גושן 14, קרית מוצקין',
-  addressAr: 'شدروت موشيه غوشين 14، كريات موتسكين',
-  mapQuery: 'שדרות משה גושן 14, קרית מוצקין, ישראל',
+  addressHe: 'תאגיד מים וביוב סובב שפרעם. סניף טמרה',
+  addressAr: 'هيئة مياه وصرف صحي محيط شفاعم – فرع طمرة',
+  /** חיפוש למפת Google המוטמעת באתר */
+  mapQuery: 'תאגיד מים וביוב סובב שפרעם סניף טמרה, ישראל',
+  /** פתיחת ניווט ב-Waze (מיקום המשרד) */
+  wazeUrl: 'https://waze.com/ul/hsvc4bth6u',
   logoUrl: '/logo.png',
   /** false when the PNG already has transparency (no white plate / no CSS tint). */
   logoRasterKnockout: true,
@@ -39,7 +42,7 @@ export function getMapsEmbedSrc() {
   return `https://www.google.com/maps?q=${q}&output=embed`
 }
 
+/** קישור לניווט חיצוני — Waze (מוגדר ב-wazeUrl). */
 export function getMapsExternalUrl() {
-  const q = encodeURIComponent(siteConfig.mapQuery)
-  return `https://www.google.com/maps/search/?api=1&query=${q}`
+  return siteConfig.wazeUrl
 }

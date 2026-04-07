@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Phone, Mail, MapPin, Camera, Globe, MessageCircle } from 'lucide-react'
+import { Phone, Mail, MapPin, Camera, Globe, MessageCircle, Loader2 } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import {
   siteConfig,
@@ -8,11 +8,37 @@ import {
   getMapsEmbedSrc,
   getMapsExternalUrl,
 } from '../config/siteConfig'
+import { FORMSPREE_CONTACT_ENDPOINT } from '../config/formspreeConfig'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
 
-const inputClass =
-  'mt-2 w-full rounded-xl border border-white/[0.1] bg-charcoal-950/90 px-4 py-3.5 text-white outline-none transition placeholder:text-zinc-600 focus:border-gold-500/45 focus:ring-2 focus:ring-gold-500/20'
+const inputBase =
+  'mt-2 w-full rounded-xl border bg-charcoal-950/90 px-4 py-3.5 text-white outline-none transition placeholder:text-zinc-600 focus:ring-2'
+
+const inputNormal =
+  `${inputBase} border-white/[0.1] focus:border-gold-500/45 focus:ring-gold-500/20`
+
+const inputError = `${inputBase} border-red-400/35 focus:border-red-400/50 focus:ring-red-500/15`
+
+const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
+
+function validateContact({ name, email, phone, message }, t) {
+  const errors = {}
+  const n = name.trim()
+  const e = email.trim()
+  const p = phone.trim()
+  const m = message.trim()
+
+  if (n.length < 2) errors.name = t.contact.formErrName
+  if (!e || !emailOk(e)) errors.email = t.contact.formErrEmail
+  if (p) {
+    const digits = p.replace(/\D/g, '')
+    if (digits.length < 8) errors.phone = t.contact.formErrPhone
+  }
+  if (m.length < 10) errors.message = t.contact.formErrMessage
+
+  return errors
+}
 
 export function Contact() {
   const { t, locale } = useLanguage()
@@ -20,6 +46,9 @@ export function Contact() {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
+  const [fieldErrors, setFieldErrors] = useState({})
+  const [submitting, setSubmitting] = useState(false)
+  const [formStatus, setFormStatus] = useState(null) // 'success' | 'error' | 'config'
 
   const address = locale === 'he' ? siteConfig.addressHe : siteConfig.addressAr
   const mobileHref = getTelHref(siteConfig.mobilePhone)
@@ -27,21 +56,67 @@ export function Contact() {
   const office2 = getTelHref(siteConfig.officePhone2)
   const wa = getWhatsAppLink()
 
-  const submitMailto = (e) => {
+  const c = t.contact
+
+  async function handleSubmit(e) {
     e.preventDefault()
+    setFieldErrors({})
+    setFormStatus(null)
+
+    const errors = validateContact({ name, email, phone, message }, t)
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      return
+    }
+
+    const endpoint = FORMSPREE_CONTACT_ENDPOINT?.trim()
+    if (!endpoint) {
+      setFormStatus('config')
+      return
+    }
+
+    setSubmitting(true)
+
     const subject =
       locale === 'he'
-        ? `פנייה מהאתר — ${name || 'לקוח'}`
-        : `تواصل من الموقع — ${name || 'عميل'}`
-    const body = [
-      `${t.contact.formName}: ${name}`,
-      `${t.contact.formPhone}: ${phone}`,
-      `${t.contact.formEmail}: ${email}`,
-      '',
-      message,
-    ].join('\n')
-    window.location.href = `mailto:${siteConfig.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+        ? `פנייה מהאתר — ${name.trim()}`
+        : `تواصل من الموقع — ${name.trim()}`
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          message: message.trim(),
+          _subject: subject,
+        }),
+      })
+
+      if (res.ok) {
+        setFormStatus('success')
+        setName('')
+        setPhone('')
+        setEmail('')
+        setMessage('')
+        return
+      }
+
+      setFormStatus('error')
+    } catch {
+      setFormStatus('error')
+    } finally {
+      setSubmitting(false)
+    }
   }
+
+  const disabled = submitting || formStatus === 'success'
+  const inputClass = (key) => (fieldErrors[key] ? inputError : inputNormal)
 
   return (
     <section id="contact" className="section-y border-b border-white/[0.06] bg-charcoal-950">
@@ -188,58 +263,146 @@ export function Contact() {
 
             <Reveal delayMs={120}>
               <form
-                onSubmit={submitMailto}
+                onSubmit={handleSubmit}
                 className="glass-panel-elevated rounded-2xl p-6 md:rounded-3xl md:p-8 lg:p-9"
+                noValidate
               >
                 <div className="grid gap-5">
                   <label className="block">
-                    <span className="text-sm font-medium text-zinc-400">{t.contact.formName}</span>
+                    <span className="text-sm font-medium text-zinc-400">{c.formName}</span>
                     <input
-                      required
+                      name="name"
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className={inputClass}
+                      onChange={(e) => {
+                        setName(e.target.value)
+                        if (fieldErrors.name) setFieldErrors((prev) => ({ ...prev, name: undefined }))
+                      }}
+                      className={inputClass('name')}
                       autoComplete="name"
+                      disabled={disabled}
+                      aria-invalid={Boolean(fieldErrors.name)}
+                      aria-describedby={fieldErrors.name ? 'err-name' : undefined}
                     />
+                    {fieldErrors.name && (
+                      <p id="err-name" className="mt-1.5 text-xs text-red-300/90" role="alert">
+                        {fieldErrors.name}
+                      </p>
+                    )}
                   </label>
                   <label className="block">
-                    <span className="text-sm font-medium text-zinc-400">{t.contact.formPhone}</span>
+                    <span className="text-sm font-medium text-zinc-400">{c.formPhone}</span>
                     <input
                       type="tel"
+                      name="phone"
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className={inputClass}
+                      onChange={(e) => {
+                        setPhone(e.target.value)
+                        if (fieldErrors.phone) setFieldErrors((prev) => ({ ...prev, phone: undefined }))
+                      }}
+                      className={inputClass('phone')}
                       autoComplete="tel"
+                      disabled={disabled}
+                      aria-invalid={Boolean(fieldErrors.phone)}
+                      aria-describedby={fieldErrors.phone ? 'err-phone' : undefined}
                     />
+                    {fieldErrors.phone && (
+                      <p id="err-phone" className="mt-1.5 text-xs text-red-300/90" role="alert">
+                        {fieldErrors.phone}
+                      </p>
+                    )}
                   </label>
                   <label className="block">
-                    <span className="text-sm font-medium text-zinc-400">{t.contact.formEmail}</span>
+                    <span className="text-sm font-medium text-zinc-400">{c.formEmail}</span>
                     <input
                       type="email"
-                      required
+                      name="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className={inputClass}
+                      onChange={(e) => {
+                        setEmail(e.target.value)
+                        if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: undefined }))
+                      }}
+                      className={inputClass('email')}
                       autoComplete="email"
+                      disabled={disabled}
+                      aria-invalid={Boolean(fieldErrors.email)}
+                      aria-describedby={fieldErrors.email ? 'err-email' : undefined}
                     />
+                    {fieldErrors.email && (
+                      <p id="err-email" className="mt-1.5 text-xs text-red-300/90" role="alert">
+                        {fieldErrors.email}
+                      </p>
+                    )}
                   </label>
                   <label className="block">
-                    <span className="text-sm font-medium text-zinc-400">{t.contact.formMessage}</span>
+                    <span className="text-sm font-medium text-zinc-400">{c.formMessage}</span>
                     <textarea
-                      required
+                      name="message"
                       rows={4}
                       value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      className={`${inputClass} resize-y`}
+                      onChange={(e) => {
+                        setMessage(e.target.value)
+                        if (fieldErrors.message) setFieldErrors((prev) => ({ ...prev, message: undefined }))
+                      }}
+                      className={`${inputClass('message')} resize-y min-h-[7.5rem]`}
+                      disabled={disabled}
+                      aria-invalid={Boolean(fieldErrors.message)}
+                      aria-describedby={fieldErrors.message ? 'err-message' : undefined}
                     />
+                    {fieldErrors.message && (
+                      <p id="err-message" className="mt-1.5 text-xs text-red-300/90" role="alert">
+                        {fieldErrors.message}
+                      </p>
+                    )}
                   </label>
                 </div>
-                <button type="submit" className="btn-primary mt-8 w-full py-4">
-                  {t.contact.formSubmit}
+
+                {formStatus === 'success' && (
+                  <div
+                    className="mt-6 rounded-xl border border-emerald-500/25 bg-emerald-950/35 px-4 py-3 text-center text-sm leading-relaxed text-emerald-100/95"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    {c.formSuccess}
+                  </div>
+                )}
+
+                {(formStatus === 'error' || formStatus === 'config') && (
+                  <div
+                    className="mt-6 rounded-xl border border-red-400/25 bg-red-950/30 px-4 py-3 text-center text-sm leading-relaxed text-red-100/90"
+                    role="alert"
+                    aria-live="assertive"
+                  >
+                    {formStatus === 'config' ? c.formErrorConfig : c.formError}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={submitting || formStatus === 'success'}
+                  aria-busy={submitting}
+                  className="btn-primary mt-8 flex w-full min-h-[48px] items-center justify-center gap-2 py-4 disabled:pointer-events-none disabled:opacity-60"
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="h-5 w-5 shrink-0 animate-spin" aria-hidden />
+                      <span>{c.formSending}</span>
+                    </>
+                  ) : (
+                    c.formSubmit
+                  )}
                 </button>
-                <p className="mt-4 text-center text-xs leading-relaxed text-zinc-500">
-                  {t.contact.formNote}
-                </p>
+
+                {formStatus === 'success' && (
+                  <button
+                    type="button"
+                    onClick={() => setFormStatus(null)}
+                    className="btn-outline mt-3 w-full border-white/[0.14] py-3 text-sm text-zinc-200"
+                  >
+                    {c.formSendAnother}
+                  </button>
+                )}
+
+                <p className="mt-4 text-center text-xs leading-relaxed text-zinc-500">{c.formNote}</p>
               </form>
             </Reveal>
           </div>
