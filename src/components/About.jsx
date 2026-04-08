@@ -28,7 +28,7 @@ export function About() {
             <div className="group relative h-full min-h-[280px] overflow-hidden rounded-2xl border border-white/[0.1] shadow-[0_28px_80px_-32px_rgba(0,0,0,0.75)] md:min-h-[320px] md:rounded-3xl">
               <div className="absolute inset-0 z-10 bg-gradient-to-tr from-gold-500/15 via-transparent to-transparent opacity-80 transition duration-700 group-hover:opacity-100" />
               <img
-                src={siteConfig.lawyerImageUrl}
+                src="/logooB.png"
                 alt={locale === 'he' ? siteConfig.lawyerNameHe : siteConfig.lawyerNameAr}
                 className="h-full w-full object-cover object-top transition duration-700 ease-out group-hover:scale-[1.03]"
                 width={800}

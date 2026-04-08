@@ -3,13 +3,22 @@
 @theme {
   --font-sans: 'Heebo', 'IBM Plex Sans Arabic', system-ui, sans-serif;
   --font-display: 'Cormorant Garamond', 'IBM Plex Sans Arabic', serif;
-  --color-gold-300: #e8d5a3;
-  --color-gold-400: #d4b87a;
-  --color-gold-500: #c9a962;
-  --color-gold-600: #a88b4a;
-  --color-charcoal-950: #0a0a0b;
-  --color-charcoal-900: #121214;
-  --color-charcoal-850: #18181b;
+  /* Brand accent family */
+  --color-gold-300: #f4dea0;
+  --color-gold-400: #f1d584;
+  --color-gold-500: #edcd71;
+  --color-gold-600: #d8b95f;
+  /* Brand background family */
+  --color-charcoal-950: #133034;
+  --color-charcoal-900: #1a3a3f;
+  --color-charcoal-850: #21444a;
+  /* Readability-first text tones */
+  --color-zinc-100: #f8f6ee;
+  --color-zinc-200: #e4e1d8;
+  --color-zinc-300: #d7d3c8;
+  --color-zinc-400: #cfcfcf;
+  --color-zinc-500: #b8b8b8;
+  --color-zinc-600: #9fa4a5;
 }
 
 @layer base {
@@ -119,7 +128,10 @@
 
   .logo-mark-img {
     mix-blend-mode: multiply;
-    filter: sepia(0.5) hue-rotate(2deg) saturate(1.75) brightness(1.14) contrast(1.06);
+    filter: sepia(0.45) hue-rotate(2deg) saturate(1.35) brightness(1.08) contrast(1.04);
+    image-rendering: -webkit-optimize-contrast;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
 }
 

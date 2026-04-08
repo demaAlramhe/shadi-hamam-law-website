@@ -3,8 +3,8 @@
  * Edit values here to update the whole site.
  */
 export const siteConfig = {
-  officeNameHe: 'משרד עו״ד שאדי המאם',
-  officeNameAr: 'مكتب المحامي شادي همّام',
+  officeNameHe: 'שאדי המאם , משרד עורכי דין ונוטריון',
+  officeNameAr: 'شادي همام, مكتب محاماه وكاتب عدل',
   lawyerNameHe: 'שאדי המאם',
   lawyerNameAr: 'شادي همّام',
   mobilePhone: '051-555-5550',
@@ -21,7 +21,7 @@ export const siteConfig = {
   wazeUrl: 'https://waze.com/ul/hsvc4bth6u',
   logoUrl: '/logo.png',
   /** false when the PNG already has transparency (no white plate / no CSS tint). */
-  logoRasterKnockout: true,
+  logoRasterKnockout: false,
   lawyerImageUrl: '/lawyer-main.png',
 }
 

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Phone, Mail, MapPin, Camera, Globe, MessageCircle, Loader2 } from 'lucide-react'
+import { Phone, Mail, MapPin, Camera, Globe, MessageCircle, Loader2, Printer } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import {
   siteConfig,
@@ -53,7 +53,7 @@ export function Contact() {
   const address = locale === 'he' ? siteConfig.addressHe : siteConfig.addressAr
   const mobileHref = getTelHref(siteConfig.mobilePhone)
   const office1 = getTelHref(siteConfig.officePhone1)
-  const office2 = getTelHref(siteConfig.officePhone2)
+  const officeFax = `fax:${siteConfig.officePhone2.replace(/\D/g, '')}`
   const wa = getWhatsAppLink()
 
   const c = t.contact
@@ -151,13 +151,15 @@ export function Contact() {
                     className="inline-flex items-center gap-2 text-white transition hover:text-gold-200"
                   >
                     <Phone className="h-4 w-4 text-gold-500/85" aria-hidden />
+                    <span className="text-zinc-400">{c.officePhoneLabel}:</span>
                     {siteConfig.officePhone1}
                   </a>
                   <a
-                    href={office2}
+                    href={officeFax}
                     className="inline-flex items-center gap-2 text-white transition hover:text-gold-200"
                   >
-                    <Phone className="h-4 w-4 text-gold-500/85" aria-hidden />
+                    <Printer className="h-4 w-4 text-gold-500/85" aria-hidden />
+                    <span className="text-zinc-400">{c.faxLabel}:</span>
                     {siteConfig.officePhone2}
                   </a>
                 </div>
@@ -227,7 +229,7 @@ export function Contact() {
                   <Phone className="h-4 w-4" aria-hidden />
                   {t.contact.ctaCall}
                 </a>
-                <a href={`mailto:${siteConfig.email}`} className="btn-ghost flex-1 sm:flex-initial">
+                <a href={`mailto:${siteConfig.email}`} className="btn-outline flex-1 sm:flex-initial">
                   <Mail className="h-4 w-4" aria-hidden />
                   {t.contact.ctaEmail}
                 </a>
@@ -237,9 +239,9 @@ export function Contact() {
 
           <div className="flex flex-col gap-8">
             <Reveal delayMs={80}>
-              <div className="overflow-hidden rounded-2xl border border-white/[0.1] bg-black/50 shadow-[0_28px_80px_-40px_rgba(0,0,0,0.85)] md:rounded-3xl">
-                <div className="flex items-center justify-between border-b border-white/[0.08] px-5 py-4">
-                  <span className="text-sm font-medium text-zinc-300">{t.contact.mapTitle}</span>
+              <div className="overflow-hidden rounded-2xl border border-gold-500/20 bg-charcoal-900/70 shadow-[0_28px_80px_-40px_rgba(0,0,0,0.7)] md:rounded-3xl">
+                <div className="flex items-center justify-between border-b border-gold-500/20 bg-charcoal-950/55 px-5 py-4">
+                  <span className="text-sm font-medium text-zinc-100">{t.contact.mapTitle}</span>
                   <a
                     href={getMapsExternalUrl()}
                     target="_blank"

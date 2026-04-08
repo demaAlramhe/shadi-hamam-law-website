@@ -60,7 +60,7 @@ export function Hero() {
                   <Phone className="h-4 w-4 shrink-0" aria-hidden />
                   {t.hero.ctaCall}
                 </a>
-                <button type="button" onClick={scrollToContact} className="btn-ghost w-full sm:w-auto">
+                <button type="button" onClick={scrollToContact} className="btn-outline w-full sm:w-auto">
                   <Send className="h-4 w-4 shrink-0" aria-hidden />
                   {t.hero.ctaForm}
                 </button>
