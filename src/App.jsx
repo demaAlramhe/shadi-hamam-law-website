@@ -10,13 +10,14 @@ import { Services } from './components/Services'
 import { WhyChooseUs } from './components/WhyChooseUs'
 import { Process } from './components/Process'
 import { FAQ } from './components/FAQ'
+import { SuccessStories } from './components/SuccessStories'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { FloatingWhatsApp } from './components/FloatingWhatsApp'
 import { BackToTop } from './components/BackToTop'
 import { JsonLd } from './components/JsonLd'
 
-const SECTION_IDS = ['hero', 'about', 'services', 'why', 'process', 'faq', 'contact']
+const SECTION_IDS = ['hero', 'about', 'services', 'why', 'process', 'faq', 'success', 'contact']
 
 function AppContent() {
   const activeId = useScrollSpy(SECTION_IDS)
@@ -37,6 +38,7 @@ function AppContent() {
         <WhyChooseUs />
         <Process />
         <FAQ />
+        <SuccessStories />
         <Contact />
       </main>
       <Footer />

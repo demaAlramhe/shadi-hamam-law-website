@@ -144,6 +144,13 @@ export const translations = {
       mapTitle: 'מיקום',
       mapOpen: 'פתיחה במפות',
     },
+    successGallery: {
+      title: 'הצלחות המשרד',
+      scrollPrev: 'התמונה הקודמת',
+      scrollNext: 'התמונה הבאה',
+      closeLabel: 'סגירה',
+      modalAria: 'הצגת תמונה בגודל מלא',
+    },
     footer: {
       tagline: 'ליווי משפטי מקצועי, אישי וברור.',
       quickLinks: 'ניווט מהיר',
@@ -322,6 +329,13 @@ export const translations = {
       ctaEmail: 'بريد',
       mapTitle: 'الموقع',
       mapOpen: 'فتح في الخرائط',
+    },
+    successGallery: {
+      title: 'نجاحات المكتب',
+      scrollPrev: 'الصورة السابقة',
+      scrollNext: 'الصورة التالية',
+      closeLabel: 'إغلاق',
+      modalAria: 'عرض الصورة بحجم أكبر',
     },
     footer: {
       tagline: 'مرافقة قانونية مهنية، شخصية وواضحة.',
