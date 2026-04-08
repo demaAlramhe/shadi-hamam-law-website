@@ -1,0 +1,16 @@
+{
+  "name": "Shadi Hamam Law Office",
+  "short_name": "Shadi Hamam",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#133034",
+  "background_color": "#133034",
+  "display": "standalone",
+  "lang": "he"
+}
