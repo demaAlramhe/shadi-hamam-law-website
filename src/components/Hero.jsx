@@ -14,9 +14,6 @@ export function Hero() {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const headline =
-    locale === 'he' ? siteConfig.officeNameHe : siteConfig.officeNameAr
-
   return (
     <section
       id="hero"
@@ -30,44 +27,64 @@ export function Hero() {
 
       <div className="relative mx-auto flex min-h-[min(100svh,56rem)] max-w-6xl flex-col justify-center gap-12 px-5 py-20 sm:px-6 lg:min-h-[min(92svh,880px)] lg:gap-16 lg:px-8 lg:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
-          <div className="order-2 flex flex-col justify-center lg:order-1">
-            <Reveal>
-              <p className="mb-4 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-gold-500/80">
-                {locale === 'he' ? 'ליווי משפטי' : 'مرافقة قانونية'}
-              </p>
+          <div className="order-2 flex w-full flex-col items-center justify-center lg:order-1">
+            <Reveal className="flex w-full flex-col items-center text-center">
               <h1
-                className={`max-w-xl text-[clamp(1.85rem,4.2vw+0.5rem,3.5rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-white ${
-                  locale === 'ar' ? 'font-sans' : 'font-display'
+                className={`mx-auto flex max-w-xl flex-col items-center text-center font-semibold leading-[1.12] text-white ${
+                  locale === 'ar'
+                    ? 'font-sans max-w-[min(100%,24rem)] tracking-[-0.02em]'
+                    : 'font-display max-w-xl tracking-[-0.03em] text-[clamp(1.85rem,4.2vw+0.5rem,3.5rem)]'
                 }`}
               >
-                <span className="text-gradient-gold">{headline}</span>
+                <span
+                  className={`text-gradient-gold ${
+                    locale === 'ar'
+                      ? 'block whitespace-nowrap text-[clamp(1.45rem,3.5vw+0.4rem,2.75rem)] leading-tight'
+                      : ''
+                  }`}
+                >
+                  {t.hero.headlineLine1}
+                </span>
+                <span
+                  className="my-3 h-px w-[min(5rem,28vw)] max-w-full shrink-0 bg-gradient-to-r from-transparent via-gold-500/75 to-transparent md:my-4"
+                  aria-hidden
+                />
+                <span
+                  className={`text-gradient-gold ${
+                    locale === 'ar'
+                      ? 'block max-w-full whitespace-nowrap text-center text-[clamp(0.78rem,2.05vw+0.28rem,1.95rem)] leading-snug'
+                      : ''
+                  }`}
+                >
+                  {t.hero.headlineLine2}
+                </span>
               </h1>
               <p className="mt-7 max-w-lg text-base leading-relaxed text-zinc-400/95 sm:text-lg md:mt-8 md:text-xl md:leading-relaxed">
                 {t.hero.subheadline}
               </p>
 
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-10">
+              <div className="mt-9 flex w-full max-w-2xl flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center md:mt-10">
                 <a
                   href={wa}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-secondary sm:flex-initial"
+                  className="btn-secondary w-full max-w-sm sm:w-auto sm:flex-initial"
                 >
                   <MessageCircle className="h-4 w-4 shrink-0" aria-hidden />
                   {t.hero.ctaWhatsApp}
                 </a>
-                <a href={tel} className="btn-outline sm:flex-initial">
+                <a href={tel} className="btn-outline w-full max-w-sm sm:w-auto sm:flex-initial">
                   <Phone className="h-4 w-4 shrink-0" aria-hidden />
                   {t.hero.ctaCall}
                 </a>
-                <button type="button" onClick={scrollToContact} className="btn-outline w-full sm:w-auto">
+                <button type="button" onClick={scrollToContact} className="btn-outline w-full max-w-sm sm:w-auto">
                   <Send className="h-4 w-4 shrink-0" aria-hidden />
                   {t.hero.ctaForm}
                 </button>
               </div>
 
               <ul
-                className="mt-12 flex flex-wrap gap-2.5 md:mt-14 md:gap-3"
+                className="mt-12 flex w-full flex-wrap justify-center gap-2.5 md:mt-14 md:gap-3"
                 aria-label="Trust highlights"
               >
                 {t.hero.trust.map((label, i) => {

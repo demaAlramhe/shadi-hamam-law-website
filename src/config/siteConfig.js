@@ -13,8 +13,8 @@ export const siteConfig = {
   email: 'office@sh-adv.net',
   instagram: 'https://www.instagram.com/shadiadvocate/',
   facebook: 'https://www.facebook.com/SH.Hamam.Law/?locale=he_IL',
-  addressHe: 'תאגיד מים וביוב סובב שפרעם. סניף טמרה',
-  addressAr: 'هيئة مياه وصرف صحي محيط شفاعم – فرع طمرة',
+  addressHe: 'בניין וליד לוטפי דיאב, קומה 1, מעל תאגיד המים טמרה',
+  addressAr: 'بناية وليد لطفي ذياب، الطابق الأول، فوق اتحاد المياه - طمرة',
   /** חיפוש למפת Google המוטמעת באתר */
   mapQuery: 'תאגיד מים וביוב סובב שפרעם סניף טמרה, ישראל',
   /** פתיחת ניווט ב-Waze (מיקום המשרד) */
