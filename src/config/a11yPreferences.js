@@ -4,6 +4,10 @@ export const A11Y_STORAGE_KEY = 'shadi-law-a11y-v1'
 
 export const defaultA11yPreferences = {
   fontScale: 1,
+  /** 'default' = site palette, 'light' | 'dark' = explicit theme */
+  colorTheme: 'default',
+  /** 'default' | 'start' | 'center' | 'end' — logical, respects RTL/LTR */
+  textAlign: 'default',
   highContrast: false,
   invert: false,
   grayscale: false,
@@ -29,11 +33,18 @@ export function parseStoredPreferences(raw) {
   }
 }
 
+const COLOR_THEMES = /** @type {const} */ (['default', 'light', 'dark'])
+const TEXT_ALIGNS = /** @type {const} */ (['default', 'start', 'center', 'end'])
+
 export function clampPreferences(p) {
+  const colorTheme = COLOR_THEMES.includes(p.colorTheme) ? p.colorTheme : 'default'
+  const textAlign = TEXT_ALIGNS.includes(p.textAlign) ? p.textAlign : 'default'
   return {
     ...defaultA11yPreferences,
     ...p,
-    fontScale: Math.min(1.375, Math.max(0.75, Number(p.fontScale) || 1)),
+    colorTheme,
+    textAlign,
+    fontScale: Math.min(1.75, Math.max(0.75, Number(p.fontScale) || 1)),
     letterSpacing: Math.min(0.2, Math.max(0, Number(p.letterSpacing) || 0)),
     lineHeight: Math.min(2.25, Math.max(1.35, Number(p.lineHeight) || 1.6)),
   }

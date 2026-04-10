@@ -19,6 +19,18 @@ export function applyA11yPreferences(prefs) {
   root.style.setProperty('--a11y-letter-spacing', `${p.letterSpacing}em`)
   root.style.setProperty('--a11y-line-height', String(p.lineHeight))
 
+  if (p.colorTheme === 'default') {
+    root.removeAttribute('data-a11y-theme')
+  } else {
+    root.setAttribute('data-a11y-theme', p.colorTheme)
+  }
+
+  if (p.textAlign === 'default') {
+    root.removeAttribute('data-a11y-text-align')
+  } else {
+    root.setAttribute('data-a11y-text-align', p.textAlign)
+  }
+
   root.toggleAttribute('data-a11y-high-contrast', p.highContrast)
   root.toggleAttribute('data-a11y-underline-links', p.underlineLinks)
   root.toggleAttribute('data-a11y-highlight-links', p.highlightLinks)
@@ -57,6 +69,8 @@ export function clearA11yFromDocument() {
   const root = document.documentElement
   const appRoot = document.getElementById('root')
   const attrs = [
+    'data-a11y-theme',
+    'data-a11y-text-align',
     'data-a11y-high-contrast',
     'data-a11y-underline-links',
     'data-a11y-highlight-links',

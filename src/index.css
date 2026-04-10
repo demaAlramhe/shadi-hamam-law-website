@@ -245,6 +245,52 @@ html[data-a11y-big-cursor='true'] #root textarea {
     pointer !important;
 }
 
+/* —— Theme: light (palette swap via design tokens) —— */
+html[data-a11y-theme='light'] {
+  --color-charcoal-950: #f8fafc;
+  --color-charcoal-900: #f1f5f9;
+  --color-charcoal-850: #e2e8f0;
+  --color-zinc-100: #0f172a;
+  --color-zinc-200: #1e293b;
+  --color-zinc-300: #334155;
+  --color-zinc-400: #475569;
+  --color-zinc-500: #64748b;
+  --color-zinc-600: #475569;
+}
+
+html[data-a11y-theme='light'] ::selection {
+  @apply bg-gold-500/35 text-charcoal-950;
+}
+
+html[data-a11y-theme='light'] .glass-panel,
+html[data-a11y-theme='light'] .glass-panel-elevated {
+  @apply border-zinc-200/90 bg-white/75 shadow-[0_1px_0_0_rgba(15,23,42,0.06)_inset];
+}
+
+html[data-a11y-theme='light'] .text-gradient-gold {
+  @apply bg-gradient-to-br from-gold-600 via-gold-500 to-gold-600 bg-clip-text text-transparent;
+}
+
+/* —— Theme: dark (slightly deeper than site default) —— */
+html[data-a11y-theme='dark'] {
+  --color-charcoal-950: #0a1214;
+  --color-charcoal-900: #0f1a1c;
+  --color-charcoal-850: #142326;
+}
+
+/* —— Text alignment (main + footer; nested utilities can still override) —— */
+html[data-a11y-text-align='start'] :is(main, footer) {
+  text-align: start !important;
+}
+
+html[data-a11y-text-align='center'] :is(main, footer) {
+  text-align: center !important;
+}
+
+html[data-a11y-text-align='end'] :is(main, footer) {
+  text-align: end !important;
+}
+
 .skip-to-content {
   @apply fixed start-4 top-4 z-[200] -translate-y-[200%] rounded-lg bg-gold-400 px-4 py-2.5 text-sm font-semibold text-charcoal-950 shadow-lg transition-transform duration-200 focus:translate-y-0 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-white;
 }
