@@ -8,4 +8,4 @@
  * The form should accept fields: name, email, phone, message (names must match
  * the JSON keys sent from `Contact.jsx`).
  */
-export const FORMSPREE_CONTACT_ENDPOINT = 'https://formspree.io/f/mvgbvyon'
+export const FORMSPREE_CONTACT_ENDPOINT = 'https://formspree.io/f/mjgpqado'
