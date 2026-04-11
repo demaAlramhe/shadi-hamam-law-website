@@ -24,6 +24,8 @@ export const translations = {
       ctaWhatsApp: 'וואטסאפ',
       ctaCall: 'התקשרו עכשיו',
       ctaForm: 'מילוי פנייה',
+      ctaInstagram: 'אינסטגרם',
+      ctaFacebook: 'פייסבוק',
       trust: ['יחס אישי', 'ליווי מקצועי', 'זמינות גבוהה', 'מענה ברור'],
     },
     about: {
@@ -223,6 +225,8 @@ export const translations = {
       ctaWhatsApp: 'واتساب',
       ctaCall: 'اتصال الآن',
       ctaForm: 'نموذج تواصل',
+      ctaInstagram: 'إنستغرام',
+      ctaFacebook: 'فيسبوك',
       trust: ['معاملة شخصية', 'مرافقة مهنية', 'استجابة سريعة', 'وضوح في المتابعة'],
     },
     about: {

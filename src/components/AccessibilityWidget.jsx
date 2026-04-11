@@ -294,13 +294,13 @@ export function AccessibilityWidget() {
         ref={openRef}
         type="button"
         onClick={openPanel}
-        className="fixed bottom-28 end-6 z-[95] flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-gold-300 via-gold-500 to-gold-600 text-charcoal-950 shadow-[0_8px_32px_-8px_rgba(201,169,98,0.55)] ring-1 ring-white/25 transition duration-300 hover:shadow-[0_12px_40px_-10px_rgba(201,169,98,0.65)] hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500/70 active:scale-[0.97] md:bottom-32 md:end-8"
+        className="fixed bottom-28 end-6 z-[95] flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-gold-300 via-gold-500 to-gold-600 text-charcoal-950 shadow-[0_8px_32px_-8px_rgba(201,169,98,0.55)] ring-2 ring-white/15 transition duration-300 hover:shadow-[0_12px_40px_-10px_rgba(201,169,98,0.65)] hover:brightness-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500/70 active:scale-95 md:bottom-32 md:end-8"
         aria-label={a.openLabel}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
         aria-controls="a11y-panel"
       >
-        <Accessibility className="h-6 w-6" aria-hidden />
+        <Accessibility className="h-7 w-7 shrink-0" aria-hidden />
       </button>
 
       {isOpen && (

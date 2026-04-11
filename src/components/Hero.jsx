@@ -5,6 +5,36 @@ import { Reveal } from './Reveal'
 
 const badgeIcons = [ShieldCheck, Scale, Clock, Sparkles]
 
+function IconInstagram({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" />
+      <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" />
+    </svg>
+  )
+}
+
+function IconFacebook({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+    >
+      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+    </svg>
+  )
+}
+
 export function Hero() {
   const { t, locale } = useLanguage()
   const wa = getWhatsAppLink()
@@ -63,24 +93,48 @@ export function Hero() {
                 {t.hero.subheadline}
               </p>
 
-              <div className="mt-9 flex w-full max-w-2xl flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center md:mt-10">
+              <div className="mt-9 flex w-full max-w-2xl flex-col items-center gap-3 md:mt-10">
                 <a
                   href={wa}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-secondary w-full max-w-sm sm:w-auto sm:flex-initial"
+                  className="btn-secondary w-full max-w-sm sm:max-w-md"
                 >
                   <MessageCircle className="h-4 w-4 shrink-0" aria-hidden />
                   {t.hero.ctaWhatsApp}
                 </a>
-                <a href={tel} className="btn-outline w-full max-w-sm sm:w-auto sm:flex-initial">
-                  <Phone className="h-4 w-4 shrink-0" aria-hidden />
-                  {t.hero.ctaCall}
-                </a>
-                <button type="button" onClick={scrollToContact} className="btn-outline w-full max-w-sm sm:w-auto">
-                  <Send className="h-4 w-4 shrink-0" aria-hidden />
-                  {t.hero.ctaForm}
-                </button>
+                <div className="grid w-full grid-cols-2 gap-3 sm:max-w-xl md:max-w-2xl md:flex md:flex-wrap md:justify-center md:gap-3">
+                  <a href={tel} className="btn-outline w-full justify-center md:w-auto md:min-w-[10.5rem]">
+                    <Phone className="h-4 w-4 shrink-0" aria-hidden />
+                    {t.hero.ctaCall}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={scrollToContact}
+                    className="btn-outline w-full justify-center md:w-auto md:min-w-[10.5rem]"
+                  >
+                    <Send className="h-4 w-4 shrink-0" aria-hidden />
+                    {t.hero.ctaForm}
+                  </button>
+                  <a
+                    href={siteConfig.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-outline w-full justify-center md:w-auto md:min-w-[10.5rem]"
+                  >
+                    <IconInstagram className="h-4 w-4 shrink-0" />
+                    {t.hero.ctaInstagram}
+                  </a>
+                  <a
+                    href={siteConfig.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-outline w-full justify-center md:w-auto md:min-w-[10.5rem]"
+                  >
+                    <IconFacebook className="h-4 w-4 shrink-0" />
+                    {t.hero.ctaFacebook}
+                  </a>
+                </div>
               </div>
 
               <ul
